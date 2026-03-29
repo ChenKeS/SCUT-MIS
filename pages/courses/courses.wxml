@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="header">
+    <text>📚 课程管理</text>
+    <button class="add-btn" bindtap="showAddDialog" wx:if="{{canEdit}}">+ 添加</button>
+  </view>
+
+  <view class="search-bar">
+    <input placeholder="搜索课程号或课程名" bindinput="onSearchInput" />
+  </view>
+
+  <view class="course-list">
+    <view class="course-card" wx:for="{{courses}}" wx:key="courseId">
+      <view class="course-info">
+        <text class="course-id">{{item.courseId}}</text>
+        <text class="course-name">{{item.name}}</text>
+        <text class="course-detail">学分: {{item.credit}} | 适用年级: {{item.grade}}年级</text>
+        <text class="course-teacher" wx:if="{{item.teacherId}}">教师ID: {{item.teacherId}}</text>
+        <text class="course-canceled" wx:if="{{item.canceledYear}}">停用年份: {{item.canceledYear}}</text>
+      </view>
+      <view class="course-actions" wx:if="{{canEdit}}">
+        <button class="edit-btn" bindtap="editCourse" data-course="{{item}}">编辑</button>
+        <button class="delete-btn" bindtap="deleteCourse" data-id="{{item.courseId}}">删除</button>
+      </view>
+    </view>
+    
+    <view wx:if="{{courses.length === 0}}" class="empty-tip">
+      <text>暂无课程数据</text>
+    </view>
+  </view>
+
+  <!-- 添加/编辑弹窗 -->
+  <view class="modal" wx:if="{{showModal}}">
+    <view class="modal-content">
+      <text class="modal-title">{{editMode ? '编辑课程' : '添加课程'}}</text>
+      
+      <input placeholder="课程号 (7位)" value="{{form.courseId}}" bindinput="onFormChange" data-field="courseId" />
+      <input placeholder="课程名称" value="{{form.name}}" bindinput="onFormChange" data-field="name" />
+      <input placeholder="教师ID" value="{{form.teacherId}}" bindinput="onFormChange" data-field="teacherId" />
+      <input placeholder="学分" value="{{form.credit}}" bindinput="onFormChange" data-field="credit" />
+      <input placeholder="适用年级 (1,2,3,4)" value="{{form.grade}}" bindinput="onFormChange" data-field="grade" />
+      <input placeholder="停用年份 (可选)" value="{{form.canceledYear}}" bindinput="onFormChange" data-field="canceledYear" />
+      
+      <view class="modal-buttons">
+        <button bindtap="saveCourse">保存</button>
+        <button bindtap="closeModal">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,182 @@
+.container {
+  padding: 20rpx 30rpx;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #667eea;
+  color: white;
+  padding: 25rpx 30rpx;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.header text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.add-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 28rpx;
+  padding: 10rpx 30rpx;
+  border-radius: 50rpx;
+  margin: 0;
+}
+
+.selection-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 25rpx 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.selection-info {
+  flex: 1;
+}
+
+.student-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.course-name {
+  font-size: 28rpx;
+  color: #667eea;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.selection-year {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+}
+
+.score-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.score-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ff9800;
+  margin-left: 8rpx;
+}
+
+.score-value.no-score {
+  color: #999;
+  font-weight: normal;
+}
+
+.selection-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+.score-btn, .delete-btn {
+  font-size: 26rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 50rpx;
+  margin: 0;
+}
+
+.score-btn {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.delete-btn {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 80rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 24rpx;
+  width: 80%;
+  padding: 40rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin-bottom: 30rpx;
+}
+
+.modal-content input, .picker {
+  border: 1rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  background: white;
+}
+
+.picker {
+  color: #333;
+}
+
+.score-info {
+  display: block;
+  text-align: center;
+  font-size: 30rpx;
+  color: #667eea;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.modal-buttons button {
+  flex: 1;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+}

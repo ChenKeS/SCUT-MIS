@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="header">
+    <text class="title">🏫 SCUT 计算机学院</text>
+    <text class="subtitle">教学管理系统</text>
+  </view>
+
+  <view class="role-section">
+    <text class="section-title">👤 角色切换</text>
+    <view class="role-buttons">
+      <button class="role-btn {{role === 'STUDENT' ? 'active' : ''}}" bindtap="switchRole" data-role="STUDENT">学生</button>
+      <button class="role-btn {{role === 'TEACHER' ? 'active' : ''}}" bindtap="switchRole" data-role="TEACHER">教师</button>
+      <button class="role-btn {{role === 'ADMIN' ? 'active' : ''}}" bindtap="switchRole" data-role="ADMIN">管理员</button>
+    </view>
+    <view class="role-tip">
+      <text>当前：{{roleName}} - {{roleDesc}}</text>
+    </view>
+  </view>
+
+  <view class="menu-grid">
+    <view class="menu-item" bindtap="goToPage" data-page="/pages/students/students">
+      <text class="menu-icon">👨‍🎓</text>
+      <text class="menu-title">学生管理</text>
+      <text class="menu-desc">增删改查 · 搜索</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="/pages/courses/courses">
+      <text class="menu-icon">📚</text>
+      <text class="menu-title">课程管理</text>
+      <text class="menu-desc">增删改查 · 搜索</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="/pages/selections/selections">
+      <text class="menu-icon">📝</text>
+      <text class="menu-title">选课成绩</text>
+      <text class="menu-desc">选课 · 成绩录入</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="/pages/statistics/statistics">
+      <text class="menu-icon">📊</text>
+      <text class="menu-title">统计分析</text>
+      <text class="menu-desc">平均分统计</text>
+    </view>
+  </view>
+</view>
