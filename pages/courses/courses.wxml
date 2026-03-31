@@ -5,10 +5,10 @@
   </view>
 
   <view class="search-bar">
-    <input placeholder="搜索课程号或课程名" bindinput="onSearchInput" />
+    <input placeholder="🔍 搜索课程号或课程名" bindinput="onSearchInput" />
   </view>
 
-  <view class="course-list">
+  <scroll-view class="course-list" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="course-card" wx:for="{{courses}}" wx:key="courseId">
       <view class="course-info">
         <text class="course-id">{{item.courseId}}</text>
@@ -26,19 +26,19 @@
     <view wx:if="{{courses.length === 0}}" class="empty-tip">
       <text>暂无课程数据</text>
     </view>
-  </view>
+  </scroll-view>
 
   <!-- 添加/编辑弹窗 -->
   <view class="modal" wx:if="{{showModal}}">
     <view class="modal-content">
       <text class="modal-title">{{editMode ? '编辑课程' : '添加课程'}}</text>
       
-      <input placeholder="课程号 (7位)" value="{{form.courseId}}" bindinput="onFormChange" data-field="courseId" />
+      <input placeholder="课程号 (7位)" value="{{form.courseId}}" bindinput="onFormChange" data-field="courseId" maxlength="7" />
       <input placeholder="课程名称" value="{{form.name}}" bindinput="onFormChange" data-field="name" />
       <input placeholder="教师ID" value="{{form.teacherId}}" bindinput="onFormChange" data-field="teacherId" />
-      <input placeholder="学分" value="{{form.credit}}" bindinput="onFormChange" data-field="credit" />
-      <input placeholder="适用年级 (1,2,3,4)" value="{{form.grade}}" bindinput="onFormChange" data-field="grade" />
-      <input placeholder="停用年份 (可选)" value="{{form.canceledYear}}" bindinput="onFormChange" data-field="canceledYear" />
+      <input placeholder="学分" value="{{form.credit}}" bindinput="onFormChange" data-field="credit" type="digit" />
+      <input placeholder="适用年级 (1,2,3,4)" value="{{form.grade}}" bindinput="onFormChange" data-field="grade" type="number" />
+      <input placeholder="停用年份 (可选)" value="{{form.canceledYear}}" bindinput="onFormChange" data-field="canceledYear" type="number" />
       
       <view class="modal-buttons">
         <button bindtap="saveCourse">保存</button>

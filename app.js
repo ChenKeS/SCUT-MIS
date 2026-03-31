@@ -8,6 +8,6 @@ App({
   },
   
   globalData: {
-    baseUrl: 'http://10.195.106.158:8080'
+    baseUrl: 'http://192.168.43.163:8080'
   }
 })

@@ -8,7 +8,7 @@ const getRole = () => {
 // 通用请求方法
 const request = (url, method, data) => {
   return new Promise((resolve, reject) => {
-    wx.showLoading({ title: '加载中...' })
+    wx.showLoading({ title: '加载中...', mask: true })
     
     wx.request({
       url: app.globalData.baseUrl + url,
@@ -39,7 +39,7 @@ const request = (url, method, data) => {
       fail: (err) => {
         wx.hideLoading()
         wx.showToast({
-          title: '网络错误，请检查后端是否启动',
+          title: '网络错误，请检查后端',
           icon: 'none',
           duration: 2000
         })
@@ -51,20 +51,12 @@ const request = (url, method, data) => {
 
 // ============ 学生 API ============
 export const studentApi = {
-  // 获取所有学生
   list: () => request('/student/list', 'GET'),
-  
-  // 添加学生
   add: (data) => request('/student/add', 'POST', data),
-  
-  // 更新学生
   update: (data) => request('/student/update', 'PUT', data),
-  
-  // 删除学生
   delete: (id) => request(`/student/${id}`, 'DELETE'),
-  
-  // 按姓名搜索
-  search: (name) => request(`/student/search?name=${name}`, 'GET')
+  search: (name) => request(`/student/search?name=${name}`, 'GET'),
+  findById: (id) => request(`/student/${id}`, 'GET')
 }
 
 // ============ 课程 API ============
@@ -73,7 +65,8 @@ export const courseApi = {
   add: (data) => request('/course/add', 'POST', data),
   update: (data) => request('/course/update', 'PUT', data),
   delete: (id) => request(`/course/${id}`, 'DELETE'),
-  search: (name) => request(`/course/search?name=${name}`, 'GET')
+  search: (name) => request(`/course/search?name=${name}`, 'GET'),
+  findById: (id) => request(`/course/${id}`, 'GET')
 }
 
 // ============ 教师 API ============
@@ -81,7 +74,8 @@ export const teacherApi = {
   list: () => request('/teacher/list', 'GET'),
   add: (data) => request('/teacher/add', 'POST', data),
   update: (data) => request('/teacher/update', 'PUT', data),
-  delete: (id) => request(`/teacher/${id}`, 'DELETE')
+  delete: (id) => request(`/teacher/${id}`, 'DELETE'),
+  findByName: (name) => request(`/teacher/search?name=${name}`, 'GET')
 }
 
 // ============ 选课 API ============
@@ -100,4 +94,36 @@ export const statisticsApi = {
   allAvg: () => request('/statistics/all/avg', 'GET'),
   classAvg: (className) => request(`/statistics/class/avg/${className}`, 'GET'),
   courseAvg: (courseId) => request(`/statistics/course/avg/${courseId}`, 'GET')
+}
+
+// ============ 综合查询 API ============
+export const queryApi = {
+  studentInfo: (studentId, name) => {
+    let url = '/studentinfo/query'
+    if (studentId) url += `?studentId=${studentId}`
+    else if (name) url += `?name=${name}`
+    return request(url, 'GET')
+  },
+  scoreQuery: (studentId, studentName, courseId, courseName) => {
+    let params = []
+    if (studentId) params.push(`studentId=${studentId}`)
+    if (studentName) params.push(`studentName=${studentName}`)
+    if (courseId) params.push(`courseId=${courseId}`)
+    if (courseName) params.push(`courseName=${courseName}`)
+    let url = '/score/query'
+    if (params.length > 0) url += `?${params.join('&')}`
+    return request(url, 'GET')
+  },
+  courseInfo: (courseId, courseName) => {
+    let url = '/courseinfo/query'
+    if (courseId) url += `?courseId=${courseId}`
+    else if (courseName) url += `?courseName=${courseName}`
+    return request(url, 'GET')
+  },
+  teacherInfo: (teacherId, teacherName) => {
+    let url = '/teacherinfo/query'
+    if (teacherId) url += `?teacherId=${teacherId}`
+    else if (teacherName) url += `?teacherName=${teacherName}`
+    return request(url, 'GET')
+  }
 }

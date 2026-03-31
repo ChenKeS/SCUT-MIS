@@ -8,7 +8,9 @@ Page({
     courseAvg: null,
     studentAvg: null,
     selectedStudentId: '',
+    selectedStudentName: '',
     selectedCourseId: '',
+    selectedCourseName: '',
     selectedClass: '',
     students: [],
     courses: [],
@@ -24,7 +26,6 @@ Page({
   async loadStudents() {
     try {
       const data = await studentApi.list()
-      // 提取班级列表
       const classes = [...new Set(data.map(s => s.studentClass))]
       this.setData({ 
         students: data,
@@ -44,7 +45,8 @@ Page({
       const data = await courseApi.list()
       this.setData({ 
         courses: data,
-        selectedCourseId: data[0]?.courseId || ''
+        selectedCourseId: data[0]?.courseId || '',
+        selectedCourseName: data[0]?.name || ''
       })
       if (data[0]) {
         this.loadCourseAvg(data[0].courseId)
@@ -58,9 +60,11 @@ Page({
     this.setData({ loading: true })
     try {
       const data = await statisticsApi.allAvg()
-      this.setData({ allAvg: data.averageScore })
+      const avg = data.averageScore
+      this.setData({ allAvg: avg !== null && avg !== undefined ? avg.toFixed(1) : null })
     } catch (err) {
       console.error('加载全校平均分失败', err)
+      this.setData({ allAvg: null })
     }
     this.setData({ loading: false })
   },
@@ -69,7 +73,8 @@ Page({
     this.setData({ loading: true })
     try {
       const data = await statisticsApi.classAvg(className)
-      this.setData({ classAvg: data.averageScore })
+      const avg = data.averageScore
+      this.setData({ classAvg: avg !== null && avg !== undefined ? avg.toFixed(1) : null })
     } catch (err) {
       console.error('加载班级平均分失败', err)
       this.setData({ classAvg: null })
@@ -81,7 +86,8 @@ Page({
     this.setData({ loading: true })
     try {
       const data = await statisticsApi.courseAvg(courseId)
-      this.setData({ courseAvg: data.averageScore })
+      const avg = data.averageScore
+      this.setData({ courseAvg: avg !== null && avg !== undefined ? avg.toFixed(1) : null })
     } catch (err) {
       console.error('加载课程平均分失败', err)
       this.setData({ courseAvg: null })
@@ -90,14 +96,12 @@ Page({
   },
 
   async loadStudentAvg() {
-    if (!this.data.selectedStudentId) {
-      wx.showToast({ title: '请选择学生', icon: 'none' })
-      return
-    }
+    if (!this.data.selectedStudentId) return
     this.setData({ loading: true })
     try {
       const data = await statisticsApi.studentAvg(this.data.selectedStudentId)
-      this.setData({ studentAvg: data.averageScore })
+      const avg = data.averageScore
+      this.setData({ studentAvg: avg !== null && avg !== undefined ? avg.toFixed(1) : null })
     } catch (err) {
       console.error('加载学生平均分失败', err)
       this.setData({ studentAvg: null })
@@ -106,27 +110,44 @@ Page({
   },
 
   onStudentChange(e) {
-    const studentId = e.detail.value
-    this.setData({ selectedStudentId: studentId })
-    this.loadStudentAvg()
+    const index = e.detail.value
+    const student = this.data.students[index]
+    if (student) {
+      this.setData({ 
+        selectedStudentId: student.studentId,
+        selectedStudentName: student.name
+      })
+      this.loadStudentAvg()
+    }
   },
 
   onClassChange(e) {
-    const className = this.data.classes[e.detail.value]
+    const index = e.detail.value
+    const className = this.data.classes[index]
     this.setData({ selectedClass: className })
     this.loadClassAvg(className)
   },
 
   onCourseChange(e) {
-    const courseId = this.data.courses[e.detail.value]?.courseId
-    this.setData({ selectedCourseId: courseId })
-    this.loadCourseAvg(courseId)
+    const index = e.detail.value
+    const course = this.data.courses[index]
+    if (course) {
+      this.setData({ 
+        selectedCourseId: course.courseId,
+        selectedCourseName: course.name
+      })
+      this.loadCourseAvg(course.courseId)
+    }
   },
 
   refreshAll() {
     this.loadAllAvg()
-    this.loadClassAvg(this.data.selectedClass)
-    this.loadCourseAvg(this.data.selectedCourseId)
+    if (this.data.selectedClass) {
+      this.loadClassAvg(this.data.selectedClass)
+    }
+    if (this.data.selectedCourseId) {
+      this.loadCourseAvg(this.data.selectedCourseId)
+    }
     if (this.data.selectedStudentId) {
       this.loadStudentAvg()
     }

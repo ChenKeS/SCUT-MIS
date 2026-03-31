@@ -1,22 +1,19 @@
 <view class="container">
-  <!-- 头部：标题 + 添加按钮 -->
   <view class="header">
     <text>👨‍🎓 学生管理</text>
     <button class="add-btn" bindtap="showAddDialog" wx:if="{{canEdit}}">+ 添加</button>
   </view>
 
-  <!-- 搜索框 -->
   <view class="search-bar">
-    <input placeholder="搜索学号或姓名" bindinput="onSearchInput" />
+    <input placeholder="🔍 搜索学号或姓名" bindinput="onSearchInput" />
   </view>
 
-  <!-- 学生列表 -->
-  <view class="student-list">
+  <scroll-view class="student-list" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="student-card" wx:for="{{students}}" wx:key="studentId">
       <view class="student-info">
         <text class="student-id">{{item.studentId}}</text>
-        <text class="student-name">{{item.name}} ({{item.sex === 'male' ? '男' : '女'}})</text>
-        <text class="student-class">{{item.studentClass}} | 入学{{item.entranceYear}}年</text>
+        <text class="student-name">{{item.name}} · {{item.sex === 'male' ? '男' : '女'}}</text>
+        <text class="student-class">{{item.studentClass}} · 入学{{item.entranceYear}}年</text>
       </view>
       <view class="student-actions" wx:if="{{canEdit}}">
         <button class="edit-btn" bindtap="editStudent" data-student="{{item}}">编辑</button>
@@ -27,18 +24,18 @@
     <view wx:if="{{students.length === 0}}" class="empty-tip">
       <text>暂无学生数据</text>
     </view>
-  </view>
+  </scroll-view>
 
   <!-- 添加/编辑弹窗 -->
   <view class="modal" wx:if="{{showModal}}">
     <view class="modal-content">
       <text class="modal-title">{{editMode ? '编辑学生' : '添加学生'}}</text>
       
-      <input placeholder="学号" value="{{form.studentId}}" bindinput="onFormChange" data-field="studentId" />
+      <input placeholder="学号 (10位)" value="{{form.studentId}}" bindinput="onFormChange" data-field="studentId" maxlength="10" />
       <input placeholder="姓名" value="{{form.name}}" bindinput="onFormChange" data-field="name" />
       <input placeholder="性别 (male/female)" value="{{form.sex}}" bindinput="onFormChange" data-field="sex" />
-      <input placeholder="入学年龄" value="{{form.entranceAge}}" bindinput="onFormChange" data-field="entranceAge" />
-      <input placeholder="入学年份" value="{{form.entranceYear}}" bindinput="onFormChange" data-field="entranceYear" />
+      <input placeholder="入学年龄 (10-50)" value="{{form.entranceAge}}" bindinput="onFormChange" data-field="entranceAge" type="number" />
+      <input placeholder="入学年份" value="{{form.entranceYear}}" bindinput="onFormChange" data-field="entranceYear" type="number" />
       <input placeholder="班级" value="{{form.studentClass}}" bindinput="onFormChange" data-field="studentClass" />
       
       <view class="modal-buttons">

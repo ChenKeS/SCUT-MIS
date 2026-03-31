@@ -4,30 +4,27 @@
     <button class="add-btn" bindtap="showAddDialog" wx:if="{{role === 'ADMIN'}}">+ 选课</button>
   </view>
 
-  <!-- 选课列表 -->
-  <view class="selection-list">
-    <block wx:for="{{selections}}" wx:key="id">
-      <view class="selection-card">
-        <view class="selection-info">
-          <text class="student-name">{{item.studentName}}</text>
-          <text class="course-name">{{item.courseName}}</text>
-          <text class="selection-year">选课年份: {{item.chosenYear}}</text>
-          <view class="score-row">
-            <text class="score-label">成绩: </text>
-            <text class="score-value {{item.score ? '' : 'no-score'}}">{{item.score || '未录入'}}</text>
-          </view>
-        </view>
-        <view class="selection-actions">
-          <button class="score-btn" bindtap="showScoreDialog" data-selection="{{item}}" wx:if="{{role === 'TEACHER' || role === 'ADMIN'}}">录入成绩</button>
-          <button class="delete-btn" bindtap="deleteSelection" data-id="{{item.id}}" wx:if="{{role === 'ADMIN'}}">删除</button>
+  <scroll-view class="selection-list" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="selection-card" wx:for="{{selections}}" wx:key="id">
+      <view class="selection-info">
+        <text class="student-name">{{item.studentName}}</text>
+        <text class="course-name">{{item.courseName}}</text>
+        <text class="selection-year">选课年份: {{item.chosenYear}}</text>
+        <view class="score-row">
+          <text class="score-label">成绩: </text>
+          <text class="score-value {{item.score ? '' : 'no-score'}}">{{item.score || '未录入'}}</text>
         </view>
       </view>
-    </block>
+      <view class="selection-actions">
+        <button class="score-btn" bindtap="showScoreDialog" data-selection="{{item}}" wx:if="{{role === 'TEACHER' || role === 'ADMIN'}}">录入成绩</button>
+        <button class="delete-btn" bindtap="deleteSelection" data-id="{{item.id}}" wx:if="{{role === 'ADMIN'}}">删除</button>
+      </view>
+    </view>
     
     <view wx:if="{{selections.length === 0}}" class="empty-tip">
       <text>暂无选课记录</text>
     </view>
-  </view>
+  </scroll-view>
 
   <!-- 添加选课弹窗 -->
   <view class="modal" wx:if="{{showAddModal}}">
@@ -35,15 +32,15 @@
       <text class="modal-title">添加选课</text>
       
       <picker mode="selector" range="{{students}}" range-key="name" bindchange="onStudentChange">
-        <view class="picker">选择学生: {{form.studentId ? '已选' : '请选择'}}</view>
+        <view class="picker">选择学生: {{form.studentName || '请选择'}}</view>
       </picker>
       
       <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
-        <view class="picker">选择课程: {{form.courseId ? '已选' : '请选择'}}</view>
+        <view class="picker">选择课程: {{form.courseName || '请选择'}}</view>
       </picker>
       
-      <input placeholder="选课年份" value="{{form.chosenYear}}" bindinput="onFormChange" data-field="chosenYear" />
-      <input placeholder="成绩 (可选)" value="{{form.score}}" bindinput="onFormChange" data-field="score" />
+      <input placeholder="选课年份" value="{{form.chosenYear}}" bindinput="onFormChange" data-field="chosenYear" type="number" />
+      <input placeholder="成绩 (可选)" value="{{form.score}}" bindinput="onFormChange" data-field="score" type="digit" />
       
       <view class="modal-buttons">
         <button bindtap="addSelection">保存</button>

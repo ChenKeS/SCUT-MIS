@@ -31,7 +31,6 @@ Page({
   },
 
   async loadStudents() {
-    console.log('baseUrl:', getApp().globalData.baseUrl)
     try {
       const data = await studentApi.list()
       this.setData({ students: data })
@@ -43,7 +42,6 @@ Page({
   onSearchInput(e) {
     const text = e.detail.value
     this.setData({ searchText: text })
-    
     if (text.trim()) {
       this.searchStudents(text)
     } else {

@@ -4,75 +4,81 @@
     <button class="refresh-btn" bindtap="refreshAll">刷新</button>
   </view>
 
-  <!-- 全校平均分 -->
-  <view class="stat-card">
-    <view class="stat-title">
-      <text class="stat-icon">🏫</text>
-      <text class="stat-name">全校平均分</text>
-    </view>
-    <view class="stat-value">
-      <text wx:if="{{allAvg !== null}}">{{allAvg}}</text>
-      <text wx:else>暂无数据</text>
-    </view>
-    <view class="stat-unit" wx:if="{{allAvg !== null}}">分</view>
-  </view>
-
-  <!-- 班级平均分 -->
-  <view class="stat-card">
-    <view class="stat-title">
-      <text class="stat-icon">👥</text>
-      <text class="stat-name">班级平均分</text>
-    </view>
-    <picker mode="selector" range="{{classes}}" bindchange="onClassChange">
-      <view class="stat-picker">
-        选择班级: {{selectedClass || '请选择'}}
-        <text class="picker-arrow">▼</text>
+  <scroll-view class="stat-list" scroll-y enhanced show-scrollbar="{{false}}">
+    <!-- 全校平均分 -->
+    <view class="stat-card">
+      <view class="stat-title">
+        <text class="stat-icon">🏫</text>
+        <text class="stat-name">全校平均分</text>
       </view>
-    </picker>
-    <view class="stat-value">
-      <text wx:if="{{classAvg !== null}}">{{classAvg}}</text>
-      <text wx:else>暂无数据</text>
-    </view>
-    <view class="stat-unit" wx:if="{{classAvg !== null}}">分</view>
-  </view>
-
-  <!-- 课程平均分 -->
-  <view class="stat-card">
-    <view class="stat-title">
-      <text class="stat-icon">📖</text>
-      <text class="stat-name">课程平均分</text>
-    </view>
-    <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
-      <view class="stat-picker">
-        选择课程: {{selectedCourseName || '请选择'}}
-        <text class="picker-arrow">▼</text>
+      <view class="stat-value">
+        <text wx:if="{{allAvg !== null}}">{{allAvg}}</text>
+        <text wx:else>暂无数据</text>
       </view>
-    </picker>
-    <view class="stat-value">
-      <text wx:if="{{courseAvg !== null}}">{{courseAvg}}</text>
-      <text wx:else>暂无数据</text>
+      <view class="stat-unit" wx:if="{{allAvg !== null}}">分</view>
     </view>
-    <view class="stat-unit" wx:if="{{courseAvg !== null}}">分</view>
-  </view>
 
-  <!-- 学生个人平均分 -->
-  <view class="stat-card">
-    <view class="stat-title">
-      <text class="stat-icon">👨‍🎓</text>
-      <text class="stat-name">学生个人平均分</text>
-    </view>
-    <picker mode="selector" range="{{students}}" range-key="name" bindchange="onStudentChange">
-      <view class="stat-picker">
-        选择学生: {{selectedStudentName || '请选择'}}
-        <text class="picker-arrow">▼</text>
+    <!-- 班级平均分 -->
+    <view class="stat-card">
+      <view class="stat-title">
+        <text class="stat-icon">👥</text>
+        <text class="stat-name">班级平均分</text>
       </view>
-    </picker>
-    <view class="stat-value">
-      <text wx:if="{{studentAvg !== null}}">{{studentAvg}}</text>
-      <text wx:else>暂无数据</text>
+      <picker mode="selector" range="{{classes}}" bindchange="onClassChange">
+        <view class="stat-picker">
+          {{selectedClass || '请选择班级'}}
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+      <view class="stat-value">
+        <text wx:if="{{classAvg !== null}}">{{classAvg}}</text>
+        <text wx:else>暂无数据</text>
+      </view>
+      <view class="stat-unit" wx:if="{{classAvg !== null}}">分</view>
     </view>
-    <view class="stat-unit" wx:if="{{studentAvg !== null}}">分</view>
-  </view>
+
+    <!-- 课程平均分 -->
+    <view class="stat-card">
+      <view class="stat-title">
+        <text class="stat-icon">📖</text>
+        <text class="stat-name">课程平均分</text>
+      </view>
+      <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
+        <view class="stat-picker">
+          {{selectedCourseName || '请选择课程'}}
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+      <view class="stat-value">
+        <text wx:if="{{courseAvg !== null}}">{{courseAvg}}</text>
+        <text wx:else>暂无数据</text>
+      </view>
+      <view class="stat-unit" wx:if="{{courseAvg !== null}}">分</view>
+    </view>
+
+    <!-- 学生个人平均分 -->
+    <view class="stat-card">
+      <view class="stat-title">
+        <text class="stat-icon">👨‍🎓</text>
+        <text class="stat-name">学生个人平均分</text>
+      </view>
+      <picker mode="selector" range="{{students}}" range-key="name" bindchange="onStudentChange">
+        <view class="stat-picker">
+          {{selectedStudentName || '请选择学生'}}
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+      <view class="stat-value">
+        <text wx:if="{{studentAvg !== null}}">{{studentAvg}}</text>
+        <text wx:else>暂无数据</text>
+      </view>
+      <view class="stat-unit" wx:if="{{studentAvg !== null}}">分</view>
+    </view>
+
+    <view wx:if="{{allAvg === null && classAvg === null && courseAvg === null && studentAvg === null}}" class="empty-tip">
+      <text>暂无统计数据</text>
+    </view>
+  </scroll-view>
 
   <!-- 加载中提示 -->
   <view class="loading-mask" wx:if="{{loading}}">
