@@ -16,9 +16,9 @@
         <text class="student-class">{{item.studentClass}} · 入学{{item.entranceYear}}年</text>
       </view>
       <view class="student-actions" wx:if="{{canEdit}}">
-        <button class="edit-btn" bindtap="editStudent" data-student="{{item}}">编辑</button>
-        <button class="delete-btn" bindtap="deleteStudent" data-id="{{item.studentId}}">删除</button>
-      </view>
+  <button class="edit-btn" bindtap="editStudent" data-student="{{item}}">改</button>
+  <button class="delete-btn" bindtap="deleteStudent" data-id="{{item.studentId}}">删</button>
+</view>
     </view>
     
     <view wx:if="{{students.length === 0}}" class="empty-tip">

@@ -109,16 +109,21 @@ page {
   display: block;
 }
 
+/* 按钮样式 - 垂直排列 */
 .course-actions {
   display: flex;
-  gap: 15rpx;
+  flex-direction: column;  /* 垂直排列 */
+  gap: 10rpx;              /* 按钮间距 */
+  flex-shrink: 0;
 }
 
 .edit-btn, .delete-btn {
-  font-size: 26rpx;
-  padding: 12rpx 24rpx;
-  border-radius: 50rpx;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 30rpx;
   margin: 0;
+  min-width: 60rpx;
+  text-align: center;
 }
 
 .edit-btn {
@@ -172,12 +177,14 @@ page {
 .modal-content input {
   border: 1rpx solid #e0e0e0;
   border-radius: 12rpx;
-  padding: 20rpx;
+  padding: 24rpx 20rpx;     /* 增加上下内边距 */
   margin-bottom: 20rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;          /* 增大字体 */
   width: 100%;
   box-sizing: border-box;
   background: #fafafa;
+  height: 80rpx;             /* 固定高度 */
+  line-height: 1.4;
 }
 
 .modal-buttons {

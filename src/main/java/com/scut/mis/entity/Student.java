@@ -9,5 +9,5 @@ public class Student {
     private String sex;
     private Integer entranceAge;
     private Integer entranceYear;
-    private String studentClass;  // 改成 studentClass，避免 class 关键字
+    private String studentClass;
 }

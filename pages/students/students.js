@@ -14,26 +14,23 @@ Page({
       entranceYear: '',
       studentClass: ''
     },
-    canEdit: true
+    canEdit: true   // 临时设为 true
   },
 
   onLoad() {
-    this.checkPermission()
+    console.log('onLoad 执行了')
+    this.loadStudents()
   },
 
   onShow() {
     this.loadStudents()
   },
 
-  checkPermission() {
-    const role = wx.getStorageSync('userRole') || 'ADMIN'
-    this.setData({ canEdit: role === 'ADMIN' })
-  },
-
   async loadStudents() {
     try {
       const data = await studentApi.list()
       this.setData({ students: data })
+      console.log('学生数量:', data.length)
     } catch (err) {
       console.error('加载失败', err)
     }
@@ -41,7 +38,6 @@ Page({
 
   onSearchInput(e) {
     const text = e.detail.value
-    this.setData({ searchText: text })
     if (text.trim()) {
       this.searchStudents(text)
     } else {
